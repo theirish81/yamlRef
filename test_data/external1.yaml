@@ -1,0 +1,6 @@
+externalObject:
+  externalFoo: externalBar
+  externalArray:
+    - a
+    - b
+    - c
