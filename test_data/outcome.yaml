@@ -1,0 +1,18 @@
+rootObjct:
+  extRef:
+    externalObject:
+      externalArray:
+      - a
+      - b
+      - c
+      externalFoo: externalBar
+  foo: bar
+  myArray:
+  - foo
+  - bar
+  - externalObject:
+      externalArray:
+      - a
+      - b
+      - c
+      externalFoo: externalBar
