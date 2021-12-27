@@ -17,7 +17,15 @@ func MergeAndMarshall(path string) ([]byte, error) {
 }
 
 func Merge(filePath string) (interface{}, error) {
-	mainBytes, err := ioutil.ReadFile(filePath)
+	url, err := url2.Parse("file://" + filePath)
+	if err != nil {
+		return nil, err
+	}
+	return merge(url)
+}
+
+func merge(url *url2.URL) (interface{}, error) {
+	mainBytes, err := ioutil.ReadFile(url.Host + url.Path)
 	var data map[interface{}]interface{}
 	if err != nil {
 		return data, err
@@ -26,7 +34,12 @@ func Merge(filePath string) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	res, err := findAndReplace(data, path.Dir(filePath))
+	res, err := findAndReplace(data, path.Dir(url.Host+url.Path))
+	if comp, ok := url.Query()["comp"]; ok {
+		casted := res.(map[interface{}]interface{})
+		obj := casted[comp[0]]
+		return obj, err
+	}
 	return res, err
 }
 
@@ -39,7 +52,7 @@ func findAndReplace(data interface{}, basePath string) (interface{}, error) {
 				if err != nil {
 					return nil, err
 				}
-				replaceData, err := Merge(resPath)
+				replaceData, err := merge(resPath)
 				if err != nil {
 					return data, err
 				}
@@ -59,7 +72,7 @@ func findAndReplace(data interface{}, basePath string) (interface{}, error) {
 				if err != nil {
 					return nil, err
 				}
-				replaceData, err := Merge(resPath)
+				replaceData, err := merge(resPath)
 				if err != nil {
 					return data, err
 				}
@@ -70,15 +83,15 @@ func findAndReplace(data interface{}, basePath string) (interface{}, error) {
 	return data, nil
 }
 
-func extractPathFromRef(ref string, basePath string) (string, error) {
+func extractPathFromRef(ref string, basePath string) (*url2.URL, error) {
 	ref = ref[5:]
 	url, err := url2.Parse(ref)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	if url.Scheme == "file" && !strings.HasPrefix(url.String(), "file:///") {
-		url, err = url2.Parse("file://" + path.Join(basePath, url.Host+url.Path))
+		url, err = url2.Parse("file://" + path.Join(basePath, url.Host+url.Path) + "?" + url.RawQuery)
 
 	}
-	return url.Host + url.Path, err
+	return url, err
 }

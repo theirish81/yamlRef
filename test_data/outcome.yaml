@@ -1,5 +1,7 @@
 rootObjct:
   extRef:
+    externalBot:
+      bot: true
     externalObject:
       externalArray:
       - a
@@ -10,9 +12,4 @@ rootObjct:
   myArray:
   - foo
   - bar
-  - externalObject:
-      externalArray:
-      - a
-      - b
-      - c
-      externalFoo: externalBar
+  - bot: true
