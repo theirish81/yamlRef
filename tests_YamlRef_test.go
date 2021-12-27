@@ -14,16 +14,16 @@ func TestLoad2(t *testing.T) {
 }
 
 func TestExtractPathFromRef(t *testing.T) {
-	extracted, _ := extractPathFromRef("$ref:file://foo/bar", "")
+	extracted, _ := refToUrl("$ref:file://foo/bar", "")
 	if extracted.Host+extracted.Path != "foo/bar" {
 		t.Error("Wrong path")
 	}
-	extracted, _ = extractPathFromRef("$ref:file://foo", "")
+	extracted, _ = refToUrl("$ref:file://foo", "")
 	if extracted.Host+extracted.Path != "foo" {
 		t.Error("Wrong path")
 	}
 
-	extracted, _ = extractPathFromRef("$ref:file://foo/bar", "/dope")
+	extracted, _ = refToUrl("$ref:file://foo/bar", "/dope")
 	if extracted.Host+extracted.Path != "/dope/foo/bar" {
 		t.Error("Wrong path")
 	}
