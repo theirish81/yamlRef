@@ -1,4 +1,4 @@
-module yamlRef
+module github.com/theirish81/yamlRef
 
 go 1.16
 
