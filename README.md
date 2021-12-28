@@ -8,8 +8,8 @@ To perform the replacement, use a "$ref string" as value in any item of your YAM
 
 * `$ref:file://external.yaml`: replace this $ref string with the value of the `external.yaml` file, located in the same
 directory as the main file
-* `$ref:file:///home/theirish81/external.yaml` replace this $ref with the value of the `external.yaml` file, located in
-* an absolute path
+* `$ref:file:///home/theirish81/external.yaml` replace this $ref with the value of the `external.yaml` file, located in 
+an absolute path
 * `$ref:file://external.yaml?comp=externalBot` replace this $ref with a specific object `externalBot` (root level only)
 described in the `external.yaml` file, located in the same directory as the main file
 
