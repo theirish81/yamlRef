@@ -50,15 +50,21 @@ func merge(url *url2.URL) (interface{}, error) {
 	if comp, ok := url.Query()["comp"]; ok {
 		// we need to assume that the loaded data structure is in fact a map
 		if casted, ok := res.(map[interface{}]interface{}); ok && len(comp) > 0 {
-			// extracting the specific object
-			obj := casted[comp[0]]
-			return obj, err
+			// extracting the specific object, if it's in fact present
+			if obj, ok := casted[comp[0]]; ok {
+				return obj, err
+			} else {
+				// if it's not present, then we'll need to throw an error
+				return nil, errors.New("comp not found in referenced object")
+			}
+
 		} else {
 			return nil, errors.New("referenced YAML file does not contain a map or comp is invalid")
 		}
 
 	}
-	return res, err
+	// if the URL DOES NOT contain a "comp" query param, then we're good, and we can return the whole data structure
+	return res, nil
 }
 
 // findAndReplace will recursively look for $refs and replace them with the loaded data structure.
