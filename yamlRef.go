@@ -1,6 +1,7 @@
 package yamlRef
 
 import (
+	"errors"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	url2 "net/url"
@@ -42,13 +43,20 @@ func merge(url *url2.URL) (interface{}, error) {
 		return nil, err
 	}
 	res, err := findAndReplace(data, path.Dir(url.Host+url.Path))
+	if err != nil {
+		return nil, err
+	}
 	// if the URL contains a "comp" query param, we want to reference a specific object in the imported YAML
 	if comp, ok := url.Query()["comp"]; ok {
 		// we need to assume that the loaded data structure is in fact a map
-		casted := res.(map[interface{}]interface{})
-		// extracting the specific object
-		obj := casted[comp[0]]
-		return obj, err
+		if casted, ok := res.(map[interface{}]interface{}); ok && len(comp) > 0 {
+			// extracting the specific object
+			obj := casted[comp[0]]
+			return obj, err
+		} else {
+			return nil, errors.New("referenced YAML file does not contain a map or comp is invalid")
+		}
+
 	}
 	return res, err
 }
