@@ -4,4 +4,4 @@ rootObjct:
   myArray:
     - foo
     - bar
-    - "$ref:file://external1.yaml"
+    - "$ref:file://external1.yaml?comp=externalBot"

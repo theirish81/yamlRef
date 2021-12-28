@@ -4,3 +4,5 @@ externalObject:
     - a
     - b
     - c
+externalBot:
+  bot: true
