@@ -1,13 +1,13 @@
 package yamlRef
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 )
 
 func TestMergeAndMarshall(t *testing.T) {
 	data, _ := MergeAndMarshall("test_data/main.yaml")
-	res, _ := ioutil.ReadFile("test_data/outcome.yaml")
+	res, _ := os.ReadFile("test_data/outcome.yaml")
 	if string(data) != string(res) {
 		t.Error("Wrong merge and marshall")
 	}

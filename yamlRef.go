@@ -3,8 +3,8 @@ package yamlRef
 import (
 	"errors"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
 	url2 "net/url"
+	"os"
 	"path"
 	"strings"
 )
@@ -33,7 +33,7 @@ func Merge(filePath string) (interface{}, error) {
 // merge will take the path to a YAML file in the form of a URL, look for any $ref and perform the
 // merges accordingly. Once done, it will return the raw data structure as an interface{}
 func merge(url *url2.URL) (interface{}, error) {
-	mainBytes, err := ioutil.ReadFile(url.Host + url.Path)
+	mainBytes, err := os.ReadFile(url.Host + url.Path)
 	var data map[interface{}]interface{}
 	if err != nil {
 		return data, err
