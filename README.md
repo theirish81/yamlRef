@@ -18,7 +18,7 @@ described in the `external.yaml` file, located in the same directory as the main
 **main.yaml**:
 
 ```yaml
-rootObjct:
+rootObject:
   foo: bar
   extRef: "$ref:file://external1.yaml"
   myArray:
