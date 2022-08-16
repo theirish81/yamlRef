@@ -1,0 +1,2 @@
+rootObject:
+  ref : "$ref:file://ext2.yaml"

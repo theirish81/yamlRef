@@ -1,4 +1,4 @@
-rootObjct:
+rootObject:
   extRef:
     externalBot:
       bot: true
@@ -8,7 +8,13 @@ rootObjct:
       - b
       - c
       externalFoo: externalBar
+    rootArray:
+    - foo
+    - bar
   foo: bar
+  moreArray:
+  - foo
+  - bar
   myArray:
   - foo
   - bar
