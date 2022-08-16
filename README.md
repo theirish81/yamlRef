@@ -1,5 +1,9 @@
 # YamlRef
 
+| Status                                                                                                                                                                                 | Test coverage |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| [![CircleCI](https://dl.circleci.com/status-badge/img/gh/theirish81/yamlRef/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/theirish81/yamlRef/tree/main)   | 92.1%         |
+
 An easy Golang library to reference and merge multiple local YAML files into a main one.
 
 ## $ref links
