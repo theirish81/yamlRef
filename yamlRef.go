@@ -36,11 +36,10 @@ func Merge(filePath string) (interface{}, error) {
 func merge(url *url2.URL) (interface{}, error) {
 	px := filepath.ToSlash(url.Host + url.Path)
 	mainBytes, err := os.ReadFile(px)
-	var data map[interface{}]interface{}
 	if err != nil {
-		return data, err
+		return nil, err
 	}
-	err = yaml.Unmarshal(mainBytes, &data)
+	data, err := unmarshalAll(mainBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -137,4 +136,16 @@ func refToUrl(ref string, basePath string) (*url2.URL, error) {
 
 	}
 	return url, err
+}
+
+func unmarshalAll(data []byte) (interface{}, error) {
+	var dataObject map[interface{}]interface{}
+	if err := yaml.Unmarshal(data, &dataObject); err == nil {
+		return dataObject, nil
+	}
+	var dataObject2 []interface{}
+	if err := yaml.Unmarshal(data, &dataObject2); err == nil {
+		return dataObject2, nil
+	}
+	return nil, errors.New("could not unmarshal contributor YAML file")
 }

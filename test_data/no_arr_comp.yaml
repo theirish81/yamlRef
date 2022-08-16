@@ -1,0 +1,2 @@
+rootObject:
+  ref: "$ref:file://arr.yaml?comp=foo"

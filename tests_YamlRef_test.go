@@ -11,6 +11,10 @@ func TestMergeAndMarshall(t *testing.T) {
 	if string(data) != string(res) {
 		t.Error("Wrong merge and marshall")
 	}
+
+	if data, _ := MergeAndMarshall("test_data/arr_ref.yaml"); string(data) != "rootObject:\n  ref:\n  - foo\n  - bar\n" {
+		t.Error("could not import an array")
+	}
 }
 
 func TestExtractPathFromRef(t *testing.T) {
@@ -36,5 +40,23 @@ func TestExtractPathFromRef(t *testing.T) {
 	extracted, _ = refToUrl("$ref:file:///foo/bar", "/dope")
 	if extracted.Host+extracted.Path != "/foo/bar" {
 		t.Error("Wrong path")
+	}
+}
+
+func TestNegative(t *testing.T) {
+	if _, err := MergeAndMarshall("test_data/no_ref.yaml"); err == nil {
+		t.Error("non existing ref should throw an error ")
+	}
+	if _, err := MergeAndMarshall("test_data/no_comp.yaml"); err == nil {
+		t.Error("non existing ref should throw an error ")
+	}
+	if _, err := MergeAndMarshall("test_data/no_arr_comp.yaml"); err == nil {
+		t.Error("non existing ref should throw an error ")
+	}
+	if _, err := MergeAndMarshall("test_data/gibberish_ref.yaml"); err == nil {
+		t.Error("broken contributing file should return an error")
+	}
+	if _, err := MergeAndMarshall("test_data/no_ref.yaml"); err == nil {
+		t.Error("broken contributing file should return an error")
 	}
 }

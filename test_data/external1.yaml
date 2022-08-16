@@ -6,3 +6,6 @@ externalObject:
     - c
 externalBot:
   bot: true
+rootArray:
+  - foo
+  - bar

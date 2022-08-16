@@ -1,7 +1,8 @@
-rootObjct:
+rootObject:
   foo: bar
   extRef: "$ref:file://external1.yaml"
   myArray:
     - foo
     - bar
     - "$ref:file://external1.yaml?comp=externalBot"
+  moreArray: "$ref:file://external1.yaml?comp=rootArray"
