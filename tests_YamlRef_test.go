@@ -32,4 +32,9 @@ func TestExtractPathFromRef(t *testing.T) {
 	if extracted.Query()["comp"][0] != "foobar" {
 		t.Error("Wrong query param")
 	}
+
+	extracted, _ = refToUrl("$ref:file:///foo/bar", "/dope")
+	if extracted.Host+extracted.Path != "/foo/bar" {
+		t.Error("Wrong path")
+	}
 }
